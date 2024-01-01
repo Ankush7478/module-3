@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract Token is ERC20 {
+    address public creater;
+    bool public isAlive;
+
+    modifier onlyCreater() {
+        require(msg.sender == creater, "Only the creater can call this function");
+        _;
+    }
+
+    constructor() ERC20("Gold Token", "GT") {
+        creater = msg.sender;
+        _mint(creater, 10);
+        isAlive = true;
+    }
+
+    function mint(address lead, uint256 bulk) external onlyCreater {
+        _mint(lead, bulk);
+    }
+
+    function burn(uint256 bulk) external {
+        _burn(msg.sender, bulk);
+    }
+
+    function transferTokens(address lead, uint256 bulk) external {
+        _transfer(msg.sender, lead, bulk);
+    }
+
+    
+    function freezeContract() external onlyCreater {
+        require(isAlive, "Contract is already frozen");
+        isAlive = false;
+    }
+
+    function changeCreater(address newCreater) external onlyCreater {
+        require(newCreater != address(0), "Invalid new creater address");
+        creater = newCreater;
+    }
+}
