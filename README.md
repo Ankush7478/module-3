@@ -1,79 +1,82 @@
-# Token Smart Contract
+# Gold Token (GT) Smart Contract
 
 ## Overview
 
-This repository contains a simple ERC-20 token smart contract implemented in Solidity. The contract extends the OpenZeppelin ERC20 implementation and includes additional functionality for minting, burning, transferring tokens, freezing the contract, and changing the contract creator.
+This Solidity smart contract represents the Gold Token (GT), an ERC-20 token deployed on the Ethereum blockchain. The contract extends the functionality provided by the OpenZeppelin ERC20 implementation. The primary features include minting, burning, and transferring tokens. Additionally, there are specific functions, such as freezing the contract and changing the developer address, that are restricted to the developer for enhanced security.
 
 ## Smart Contract Details
 
-### Token Details
+### Token Information
 
 - **Name:** Gold Token
 - **Symbol:** GT
+- **Decimals:** 18
 
-### Main Features
+### Developer
 
-1. **Minting Tokens:** The contract creator can mint new tokens and assign them to a specific address.
+- **Address:** [Developer Address]
+- **Modifier:** onlydevoleper
 
-2. **Burning Tokens:** Token holders can burn a specified amount of their own tokens.
+### State Variables
 
-3. **Transferring Tokens:** Token holders can transfer tokens to other addresses.
+- `devoleper`: The address of the developer who has special privileges.
+- `isAlive`: A boolean flag indicating whether the contract is active or frozen.
 
-4. **Freezing the Contract:** The contract creator can freeze the contract, preventing any further modifications.
+### Modifiers
 
-5. **Changing the Contract Creator:** The contract creator can transfer the role to a new address.
+- `onlydevoleper`: Ensures that only the developer can execute certain functions.
 
-### Security
+### Constructor
 
-- The `onlyCreater` modifier ensures that only the contract creator can execute certain functions.
+Upon deployment, the constructor initializes the token with an initial supply of 10 tokens, all allocated to the developer.
 
-- The contract uses the OpenZeppelin ERC20 implementation, a widely used and audited standard for ERC-20 tokens.
+### Functions
 
-### Usage
+1. **Minting Tokens:**
+   - **Function:** `mint(address lead, uint256 bulk)`
+   - **Access:** onlydevoleper
+   - **Purpose:** Allows the developer to mint additional tokens and allocate them to a specified address.
+
+2. **Burning Tokens:**
+   - **Function:** `burn(uint256 bulk)`
+   - **Access:** Any address
+   - **Purpose:** Enables any token holder to burn a specified amount of their own tokens.
+
+3. **Transferring Tokens:**
+   - **Function:** `transferTokens(address lead, uint256 bulk)`
+   - **Access:** Any address
+   - **Purpose:** Allows any token holder to transfer tokens to another address.
+
+4. **Freezing the Contract:**
+   - **Function:** `freezeContract()`
+   - **Access:** onlydevoleper
+   - **Purpose:** Permits the developer to freeze the contract, preventing any further changes.
+
+5. **Changing Developer Address:**
+   - **Function:** `changeCreater(address newCreater)`
+   - **Access:** onlydevoleper
+   - **Purpose:** Enables the developer to change the address assigned as the developer.
+
+## Usage
 
 1. **Deployment:**
-   - Deploy the contract to an Ethereum-compatible blockchain.
+   - Deploy the contract to the Ethereum blockchain, specifying the initial parameters.
 
-2. **Minting Tokens:**
-   - Call the `mint` function, specifying the address to receive the tokens and the amount to mint.
+2. **Developer Privileges:**
+   - Only the developer can execute functions restricted by the `onlydevoleper` modifier.
 
-3. **Burning Tokens:**
-   - Call the `burn` function, specifying the amount of tokens to burn.
+3. **Minting and Burning:**
+   - Users can mint new tokens by calling the `mint` function.
+   - Any token holder can burn their own tokens using the `burn` function.
 
 4. **Transferring Tokens:**
-   - Call the `transferTokens` function, specifying the recipient address and the amount of tokens to transfer.
+   - Token holders can transfer tokens to other addresses using the `transferTokens` function.
 
 5. **Freezing the Contract:**
-   - Call the `freezeContract` function to freeze the contract.
+   - The developer can freeze the contract by calling the `freezeContract` function, preventing further modifications.
 
-6. **Changing the Contract Creator:**
-   - Call the `changeCreater` function, specifying the new contract creator address.
-
-### Example
-
-```javascript
-// Deploy the contract
-let token = await Token.deployed();
-
-// Mint 100 tokens to address 0x123
-await token.mint("0x123", 100);
-
-// Transfer 50 tokens from the deployer to address 0x456
-await token.transferTokens("0x456", 50);
-
-// Burn 25 tokens from address 0x456
-await token.burn(25);
-
-// Freeze the contract
-await token.freezeContract();
-
-// Change the contract creator to address 0x789
-await token.changeCreater("0x789");
-```
-
-## License
-
-This smart contract is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+6. **Changing Developer Address:**
+   - The developer can change the developer address using the `changeCreater` function.
 
 ## Author
 
