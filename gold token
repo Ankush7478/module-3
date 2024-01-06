@@ -4,21 +4,21 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Token is ERC20 {
-    address public creater;
+    address public devoleper;
     bool public isAlive;
 
-    modifier onlyCreater() {
-        require(msg.sender == creater, "Only the creater can call this function");
+    modifier onlydevoleper() {
+        require(msg.sender == devoleper, "Only the devoleper can call this function");
         _;
     }
 
     constructor() ERC20("Gold Token", "GT") {
-        creater = msg.sender;
-        _mint(creater, 10);
+        devoleper = msg.sender;
+        _mint(devoleper, 10);
         isAlive = true;
     }
 
-    function mint(address lead, uint256 bulk) external onlyCreater {
+    function mint(address lead, uint256 bulk) external onlydevoleper {
         _mint(lead, bulk);
     }
 
@@ -31,13 +31,13 @@ contract Token is ERC20 {
     }
 
     
-    function freezeContract() external onlyCreater {
+    function freezeContract() external onlydevoleper {
         require(isAlive, "Contract is already frozen");
         isAlive = false;
     }
 
-    function changeCreater(address newCreater) external onlyCreater {
-        require(newCreater != address(0), "Invalid new creater address");
-        creater = newCreater;
+    function changeCreater(address newCreater) external onlydevoleper {
+        require(newCreater != address(0), "Invalid new devoloper address");
+        devoleper= newCreater;
     }
 }
